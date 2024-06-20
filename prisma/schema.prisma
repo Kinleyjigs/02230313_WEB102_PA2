@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.VarChar(255)
+  email    String  @unique @db.VarChar(255)
+  name     String? @db.VarChar(255)
+  password String  @db.VarChar(255)
+}
+
+model pokemon {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  type        String @db.VarChar(50)
+  height      Float
+  weight      Float
+  description String
+}
+
+
+model caught_pokemon {
+  id          Int     @id @default(autoincrement())
+  pokemonId   Int
+  userId      String
+  caughtAt    DateTime @default(now())
+
+} 
